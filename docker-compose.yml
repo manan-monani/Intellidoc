@@ -1,0 +1,84 @@
+# ===========================================================
+# IntelliDoc — Docker Compose (Local Development)
+# ===========================================================
+# This file defines all services needed to run IntelliDoc locally.
+#
+# Usage:
+#   docker-compose up -d          # Start all services
+#   docker-compose down           # Stop all services
+#   docker-compose logs -f        # View logs
+#   docker-compose ps             # Check service status
+#
+# Services:
+#   - postgres:  Database for documents, users, metadata
+#   - redis:     Caching and real-time updates
+#   - localstack: Local AWS S3 emulation (no cloud costs!)
+# ===========================================================
+
+version: "3.9"
+
+services:
+  # ── PostgreSQL Database ──────────────────────────────────
+  # Stores documents, users, metadata, processing jobs.
+  # Data persists in a Docker volume even after container stops.
+  postgres:
+    image: postgres:16-alpine
+    container_name: intellidoc-postgres
+    environment:
+      POSTGRES_DB: intellidoc
+      POSTGRES_USER: intellidoc_user
+      POSTGRES_PASSWORD: intellidoc_pass
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U intellidoc_user -d intellidoc"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ── Redis ────────────────────────────────────────────────
+  # Used for:
+  # 1. Caching ML model results
+  # 2. WebSocket pub/sub for real-time updates
+  # 3. Rate limiting
+  redis:
+    image: redis:7-alpine
+    container_name: intellidoc-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ── LocalStack (Local AWS) ──────────────────────────────
+  # Emulates AWS S3 locally so you don't need a real AWS
+  # account during development. FREE to use!
+  #
+  # After starting, create a bucket:
+  #   aws --endpoint-url=http://localhost:4566 s3 mb s3://intellidoc-documents
+  localstack:
+    image: localstack/localstack:latest
+    container_name: intellidoc-localstack
+    environment:
+      - SERVICES=s3
+      - DEFAULT_REGION=ap-south-1
+      - GATEWAY_LISTEN=0.0.0.0:4566
+    ports:
+      - "4566:4566"
+    volumes:
+      - localstack_data:/var/lib/localstack
+      - /var/run/docker.sock:/var/run/docker.sock
+
+volumes:
+  postgres_data:
+    name: intellidoc-postgres-data
+  redis_data:
+    name: intellidoc-redis-data
+  localstack_data:
+    name: intellidoc-localstack-data

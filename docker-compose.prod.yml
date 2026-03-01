@@ -1,0 +1,80 @@
+# ============================================================
+# IntelliDoc — Production Docker Compose
+# ============================================================
+# Used on the AWS EC2 instance for production deployment.
+# Differs from dev docker-compose:
+#   - Uses ECR image instead of building locally
+#   - No LocalStack (real AWS S3)
+#   - Includes Nginx
+#   - Production-ready settings
+#
+# Usage on EC2:
+#   docker-compose -f docker-compose.prod.yml up -d
+# ============================================================
+
+version: "3.9"
+
+services:
+  # ── Backend (FastAPI) ──────────────────────────────────
+  backend:
+    image: ${ECR_REGISTRY}/intellidoc-backend:latest
+    container_name: intellidoc-backend
+    restart: always
+    env_file: .env
+    ports:
+      - "8000:8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      - faiss_index:/app/rag/faiss_index
+      - ml_models:/app/ml/models_cache
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 30s
+      timeout: 10s
+      start_period: 60s
+      retries: 3
+
+  # ── PostgreSQL ─────────────────────────────────────────
+  postgres:
+    image: postgres:16-alpine
+    container_name: intellidoc-postgres
+    restart: always
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ── Redis ──────────────────────────────────────────────
+  redis:
+    image: redis:7-alpine
+    container_name: intellidoc-redis
+    restart: always
+    command: redis-server --maxmemory 256mb --maxmemory-policy allkeys-lru
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_data:
+    name: intellidoc-prod-postgres
+  redis_data:
+    name: intellidoc-prod-redis
+  faiss_index:
+    name: intellidoc-faiss-index
+  ml_models:
+    name: intellidoc-ml-models

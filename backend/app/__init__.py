@@ -1,0 +1,3 @@
+"""
+IntelliDoc Backend Application
+"""

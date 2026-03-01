@@ -1,0 +1,64 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg-info/
+dist/
+build/
+.eggs/
+venv/
+env/
+.venv/
+
+# Environment
+.env
+.env.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Docker
+docker-compose.override.yml
+
+# ML Models (too big for git)
+backend/app/ml/models_cache/
+*.pt
+*.bin
+*.safetensors
+
+# FAISS indices
+backend/app/rag/faiss_index/
+*.faiss
+
+# Uploads
+backend/uploads/
+
+# Node
+node_modules/
+frontend/dist/
+frontend/build/
+
+# Logs
+*.log
+logs/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Airflow
+backend/pipeline/logs/
+backend/pipeline/airflow.db
+
+# Terraform
+infrastructure/terraform/.terraform/
+infrastructure/terraform/*.tfstate*
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/

@@ -77,6 +77,7 @@ infrastructure/terraform/*.tfstate
 infrastructure/terraform/*.tfstate.*
 infrastructure/terraform/terraform.tfvars
 infrastructure/terraform/*.backup
+artifacts/
 
 # ── Testing ──────────────────────────────────────────────────
 .pytest_cache/

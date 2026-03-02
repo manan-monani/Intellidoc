@@ -1,0 +1,30 @@
+services:
+  backend:
+    image: 331713896525.dkr.ecr.ap-south-1.amazonaws.com/intellidoc-backend:latest
+    container_name: intellidoc-backend
+    restart: always
+    env_file: .env
+    ports:
+      - "8000:8000"
+    depends_on:
+      redis:
+        condition: service_healthy
+    volumes:
+      - faiss_index:/app/rag/faiss_index
+      - ml_models:/app/ml/models_cache
+  redis:
+    image: redis:7-alpine
+    container_name: intellidoc-redis
+    restart: always
+    command: redis-server --maxmemory 256mb --maxmemory-policy allkeys-lru
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+volumes:
+  redis_data:
+  faiss_index:
+  ml_models:

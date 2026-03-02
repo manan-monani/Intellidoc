@@ -1,4 +1,8 @@
-# Python
+# ============================================================
+# IntelliDoc .gitignore
+# ============================================================
+
+# ── Python ───────────────────────────────────────────────────
 __pycache__/
 *.py[cod]
 *$py.class
@@ -11,54 +15,74 @@ venv/
 env/
 .venv/
 
-# Environment
+# ── Environment & Secrets ────────────────────────────────────
 .env
 .env.local
+.env.production
+.env.*.local
+aws-secret-key*
+*.pem
+*.key
 
-# IDE
+# ── IDE / Editor ─────────────────────────────────────────────
 .vscode/
 .idea/
 *.swp
 *.swo
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
 
-# Docker
+# ── Docker ───────────────────────────────────────────────────
 docker-compose.override.yml
 
-# ML Models (too big for git)
+# ── ML Models (too large for git) ────────────────────────────
 backend/app/ml/models_cache/
 *.pt
 *.bin
 *.safetensors
+*.onnx
+*.h5
 
-# FAISS indices
+# ── FAISS Indices ────────────────────────────────────────────
 backend/app/rag/faiss_index/
 *.faiss
 
-# Uploads
+# ── Uploads ──────────────────────────────────────────────────
 backend/uploads/
 
-# Node
+# ── Node / Frontend ─────────────────────────────────────────
 node_modules/
 frontend/dist/
 frontend/build/
 
-# Logs
+# ── Logs ─────────────────────────────────────────────────────
 *.log
 logs/
 
-# OS
+# ── OS Files ─────────────────────────────────────────────────
 .DS_Store
 Thumbs.db
+Desktop.ini
 
-# Airflow
+# ── Airflow ──────────────────────────────────────────────────
 backend/pipeline/logs/
 backend/pipeline/airflow.db
 
-# Terraform
+# ── Terraform ────────────────────────────────────────────────
 infrastructure/terraform/.terraform/
-infrastructure/terraform/*.tfstate*
+infrastructure/terraform/.terraform.lock.hcl
+infrastructure/terraform/*.tfstate
+infrastructure/terraform/*.tfstate.*
+infrastructure/terraform/terraform.tfvars
+infrastructure/terraform/*.backup
 
-# Testing
+# ── Testing ──────────────────────────────────────────────────
 .pytest_cache/
 .coverage
 htmlcov/
+
+# ── Misc ─────────────────────────────────────────────────────
+a.out
+*.out

@@ -26,8 +26,7 @@ pandas==2.2.3
 numpy==1.26.4
 
 # ---- ML / Deep Learning ----
-torch==2.5.1
-torchvision==0.20.1
+# torch and torchvision installed separately in Dockerfile (CPU-only)
 transformers==4.47.1
 scikit-learn==1.6.1
 
@@ -51,7 +50,7 @@ sentence-transformers==3.3.1
 faiss-cpu==1.9.0.post1
 
 # ---- LLM ----
-ollama==0.4.6
+ollama>=0.4.0
 
 # ---- Redis / Caching ----
 redis==5.2.1
@@ -63,8 +62,8 @@ python-dotenv==1.0.1
 # ---- Testing ----
 pytest==8.3.4
 pytest-asyncio==0.25.0
-httpx==0.28.1
+httpx>=0.27.0
 
 # ---- Utilities ----
 aiofiles==24.1.0
-python-magic-bin==0.4.14
+python-magic==0.4.27

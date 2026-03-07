@@ -58,13 +58,18 @@ class Settings(BaseSettings):
     s3_bucket_name: str = "intellidoc-documents"
 
     # ── ML Models ────────────────────────────────────────────
-    ml_inference_mode: str = "local"  # "local" or "sagemaker"
+    ml_inference_mode: str = "local"  # "local" or "bedrock"
     huggingface_cache_dir: str = "./ml/models_cache"
+
+    # ── AWS Bedrock ──────────────────────────────────────────
+    bedrock_model_id: str = "anthropic.claude-3-haiku-20240307-v1:0"
+    bedrock_embed_model_id: str = "amazon.titan-embed-text-v2:0"
 
     # ── RAG Pipeline ─────────────────────────────────────────
     faiss_index_path: str = "./rag/faiss_index"
     embedding_model: str = "all-MiniLM-L6-v2"
-    llm_provider: str = "ollama"
+    embedding_provider: str = "local"  # "local" or "bedrock"
+    llm_provider: str = "ollama"  # "ollama" or "bedrock"
     ollama_base_url: str = "http://localhost:11434"
     ollama_model: str = "mistral"
 

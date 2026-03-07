@@ -67,7 +67,14 @@ class QAEngine:
 
     def __init__(self):
         self.embedder = EmbeddingGenerator(model_name=settings.embedding_model)
-        self.vector_store = FAISSVectorStore(dimension=384)
+
+        # Set FAISS dimension based on embedding provider
+        if settings.embedding_provider == "bedrock":
+            dimension = 1024  # Titan Embeddings v2
+        else:
+            dimension = 384   # all-MiniLM-L6-v2
+
+        self.vector_store = FAISSVectorStore(dimension=dimension)
         self.chunker = DocumentChunker(chunk_size=800, chunk_overlap=200)
         self._load_index()
 
@@ -293,27 +300,34 @@ Question: {question}
 Answer:"""
 
         try:
-            # Use Ollama for local LLM inference
-            response = ollama.chat(
-                model=settings.ollama_model,
-                messages=[
-                    {
-                        "role": "system",
-                        "content": "You are a helpful document analysis assistant. "
-                                   "Answer questions accurately based on the provided context.",
+            if settings.llm_provider == "bedrock":
+                # Use AWS Bedrock for LLM inference
+                from app.ml.bedrock_client import get_bedrock_client
+
+                client = get_bedrock_client()
+                return client.generate_qa_answer(question, context)
+            else:
+                # Use Ollama for local LLM inference
+                response = ollama.chat(
+                    model=settings.ollama_model,
+                    messages=[
+                        {
+                            "role": "system",
+                            "content": "You are a helpful document analysis assistant. "
+                                       "Answer questions accurately based on the provided context.",
+                        },
+                        {
+                            "role": "user",
+                            "content": prompt,
+                        },
+                    ],
+                    options={
+                        "temperature": 0.3,
+                        "top_p": 0.9,
+                        "num_predict": 500,
                     },
-                    {
-                        "role": "user",
-                        "content": prompt,
-                    },
-                ],
-                options={
-                    "temperature": 0.3,  # Low temperature = more focused answers
-                    "top_p": 0.9,
-                    "num_predict": 500,  # Max tokens in response
-                },
-            )
-            return response["message"]["content"]
+                )
+                return response["message"]["content"]
 
         except Exception as e:
             logger.error(f"LLM generation failed: {e}")

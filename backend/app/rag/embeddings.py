@@ -39,8 +39,10 @@ from sentence_transformers import SentenceTransformer
 import numpy as np
 import logging
 from typing import List, Optional
+from app.config import get_settings
 
 logger = logging.getLogger(__name__)
+settings = get_settings()
 
 
 class EmbeddingGenerator:
@@ -80,23 +82,19 @@ class EmbeddingGenerator:
         """
         Convert a single text to an embedding vector.
 
-        Args:
-            text: Input text
-
-        Returns:
-            NumPy array of shape (384,) — the embedding vector
-
-        How it works internally:
-            1. Tokenize: "Hello world" → [CLS, Hello, world, SEP]
-            2. Encode: Feed tokens through the transformer
-            3. Pool: Average all token outputs into one vector
-            4. Normalize: Scale to unit length (for cosine similarity)
+        Supports two modes:
+        - "local": Uses sentence-transformers (384-dim)
+        - "bedrock": Uses Amazon Titan Embeddings v2 (1024-dim)
         """
+        if settings.embedding_provider == "bedrock":
+            from app.ml.bedrock_client import get_bedrock_client
+            return get_bedrock_client().embed_text(text)
+
         self.load_model()
         embedding = self.model.encode(
             text,
             convert_to_numpy=True,
-            normalize_embeddings=True,  # For cosine similarity
+            normalize_embeddings=True,
         )
         return embedding
 
@@ -109,25 +107,18 @@ class EmbeddingGenerator:
         """
         Convert multiple texts to embeddings efficiently.
 
-        Args:
-            texts: List of texts to embed
-            batch_size: How many texts to process at once
-                       (GPU memory dependent)
-            show_progress: Show progress bar
-
-        Returns:
-            NumPy array of shape (num_texts, 384)
-
-        Batching is important because:
-        - Processing one text at a time is slow
-        - GPUs/CPUs can process multiple texts in parallel
-        - batch_size=32 is a good default for CPU
+        Supports two modes:
+        - "local": Uses sentence-transformers batch encoding
+        - "bedrock": Uses Amazon Titan Embeddings v2
         """
-        self.load_model()
-
         if not texts:
             return np.array([])
 
+        if settings.embedding_provider == "bedrock":
+            from app.ml.bedrock_client import get_bedrock_client
+            return get_bedrock_client().embed_batch(texts)
+
+        self.load_model()
         embeddings = self.model.encode(
             texts,
             batch_size=batch_size,
@@ -138,7 +129,10 @@ class EmbeddingGenerator:
         return embeddings
 
     def get_dimension(self) -> int:
-        """Get the embedding dimension (e.g., 384 for MiniLM)."""
+        """Get the embedding dimension."""
+        if settings.embedding_provider == "bedrock":
+            from app.ml.bedrock_client import get_bedrock_client
+            return get_bedrock_client().get_embedding_dimension()
         self.load_model()
         return self.embedding_dim
 

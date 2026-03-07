@@ -29,8 +29,10 @@ Industry context:
 from transformers import pipeline
 import logging
 from typing import List, Optional
+from app.config import get_settings
 
 logger = logging.getLogger(__name__)
+settings = get_settings()
 
 
 # Default document categories
@@ -106,41 +108,33 @@ class DocumentClassifier:
         """
         Classify a document's text.
 
-        Args:
-            text: Document text (from OCR or direct extraction)
-            top_k: Number of top predictions to return
-            max_length: Maximum text length to process
-                       (truncated for efficiency)
-
-        Returns:
-            {
-                "label": "invoice",
-                "confidence": 0.89,
-                "all_labels": [
-                    {"label": "invoice", "score": 0.89},
-                    {"label": "receipt", "score": 0.06},
-                    ...
-                ]
-            }
-
-        How zero-shot classification works:
-            For each candidate label, the model asks:
-            "Is this text about {label}?"
-            And gives a probability score.
-            The highest score wins.
+        Supports two modes:
+        - "local": Uses HuggingFace facebook/bart-large-mnli
+        - "bedrock": Uses AWS Bedrock Claude for zero-shot classification
         """
+        if settings.ml_inference_mode == "bedrock":
+            return self._classify_bedrock(text, top_k)
+        return self._classify_local(text, top_k, max_length)
+
+    def _classify_bedrock(self, text: str, top_k: int) -> dict:
+        """Classify using AWS Bedrock."""
+        from app.ml.bedrock_client import get_bedrock_client
+
+        client = get_bedrock_client()
+        return client.classify(text, self.categories, top_k)
+
+    def _classify_local(self, text: str, top_k: int, max_length: int) -> dict:
+        """Classify using local HuggingFace model."""
         self.load_model()
 
-        # Truncate text if too long (BERT has a 1024 token limit)
         truncated_text = text[:max_length]
 
         result = self.classifier(
             truncated_text,
             candidate_labels=self.categories,
-            multi_label=False,  # Document can only be ONE type
+            multi_label=False,
         )
 
-        # Format results
         all_labels = [
             {"label": label, "score": round(score, 4)}
             for label, score in zip(result["labels"][:top_k], result["scores"][:top_k])

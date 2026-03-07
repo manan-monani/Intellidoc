@@ -29,8 +29,10 @@ Industry context:
 from transformers import pipeline
 import logging
 from typing import Optional
+from app.config import get_settings
 
 logger = logging.getLogger(__name__)
+settings = get_settings()
 
 
 class TextSummarizer:
@@ -77,31 +79,20 @@ class TextSummarizer:
         """
         Generate a summary of the input text.
 
-        Args:
-            text: Input text to summarize
-            max_length: Maximum summary length (in tokens)
-            min_length: Minimum summary length (in tokens)
-            max_input_length: Maximum input text length
-
-        Returns:
-            {
-                "summary": "The summarized text...",
-                "original_length": 2500,
-                "summary_length": 120,
-                "compression_ratio": 0.048
-            }
-
-        What happens internally:
-            1. Text is tokenized (split into subword pieces)
-            2. If too long, it's split into chunks and each is summarized
-            3. Chunks' summaries are combined for the final summary
+        Supports two modes:
+        - "local": Uses HuggingFace facebook/bart-large-cnn
+        - "bedrock": Uses AWS Bedrock Claude for summarization
         """
-        self.load_model()
+        if settings.ml_inference_mode == "bedrock":
+            return self._summarize_bedrock(text, max_length)
+        return self._summarize_local(text, max_length, min_length, max_input_length)
+
+    def _summarize_bedrock(self, text: str, max_length: int) -> dict:
+        """Summarize using AWS Bedrock."""
+        from app.ml.bedrock_client import get_bedrock_client
 
         original_length = len(text)
-
         if original_length < 100:
-            # Text is too short to summarize meaningfully
             return {
                 "summary": text,
                 "original_length": original_length,
@@ -109,7 +100,36 @@ class TextSummarizer:
                 "compression_ratio": 1.0,
             }
 
-        # Handle long texts by chunking
+        client = get_bedrock_client()
+        summary = client.summarize(text, max_length)
+
+        return {
+            "summary": summary,
+            "original_length": original_length,
+            "summary_length": len(summary),
+            "compression_ratio": round(len(summary) / original_length, 4),
+        }
+
+    def _summarize_local(
+        self,
+        text: str,
+        max_length: int,
+        min_length: int,
+        max_input_length: int,
+    ) -> dict:
+        """Summarize using local HuggingFace model."""
+        self.load_model()
+
+        original_length = len(text)
+
+        if original_length < 100:
+            return {
+                "summary": text,
+                "original_length": original_length,
+                "summary_length": original_length,
+                "compression_ratio": 1.0,
+            }
+
         if len(text.split()) > max_input_length:
             summary = self._summarize_long_text(
                 text, max_length, min_length, max_input_length
@@ -119,7 +139,7 @@ class TextSummarizer:
                 text,
                 max_length=max_length,
                 min_length=min_length,
-                do_sample=False,  # Deterministic output
+                do_sample=False,
             )
             summary = result[0]["summary_text"]
 

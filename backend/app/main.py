@@ -117,6 +117,10 @@ async def root():
         "version": "1.0.0",
     }
 
+@app.get("/health", tags=["Health"])
+async def health():
+    """Health check endpoint for ALB and container health checks."""
+    return {"status": "healthy"}
 
 @app.get("/health", tags=["Health"])
 async def health_check():

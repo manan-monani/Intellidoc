@@ -2,7 +2,31 @@
 # Terraform Variables — Copy to terraform.tfvars and fill in
 # ============================================================
 
-db_password    = "YOUR_STRONG_DB_PASSWORD"
-instance_type  = "t3.micro"
 aws_region     = "ap-south-1"
-key_name       = "your-aws-key-pair-name"
+environment    = "prod"
+
+# Database
+db_password       = "YOUR_STRONG_DB_PASSWORD"
+db_instance_class = "db.t3.small"
+
+# ECS (container sizing)
+ecs_cpu           = 1024    # 1 vCPU
+ecs_memory        = 3072    # 3 GB
+ecs_desired_count = 1
+ecs_min_count     = 1
+ecs_max_count     = 4
+
+# Secrets
+jwt_secret_key = "YOUR_JWT_SECRET_KEY"
+app_secret_key = "YOUR_APP_SECRET_KEY"
+
+# GitHub (for CI/CD OIDC authentication)
+github_org  = "your-github-username"
+github_repo = "Intellidoc"
+
+# AWS Bedrock models
+bedrock_model_id       = "anthropic.claude-3-haiku-20240307-v1:0"
+bedrock_embed_model_id = "amazon.titan-embed-text-v2:0"
+
+# ElastiCache
+redis_node_type = "cache.t3.micro"

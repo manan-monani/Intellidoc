@@ -1,14 +1,10 @@
 # ============================================================
-# IntelliDoc — Production Docker Compose
+# IntelliDoc — Production Docker Compose (Local Testing)
 # ============================================================
-# Used on the AWS EC2 instance for production deployment.
-# Differs from dev docker-compose:
-#   - Uses ECR image instead of building locally
-#   - No LocalStack (real AWS S3)
-#   - Includes Nginx
-#   - Production-ready settings
+# For local testing of the production-like setup.
+# In AWS, the backend runs on ECS Fargate (not docker-compose).
 #
-# Usage on EC2:
+# Usage (local prod testing):
 #   docker-compose -f docker-compose.prod.yml up -d
 # ============================================================
 
@@ -17,10 +13,16 @@ version: "3.9"
 services:
   # ── Backend (FastAPI) ──────────────────────────────────
   backend:
-    image: ${ECR_REGISTRY}/intellidoc-backend:latest
+    image: ${ECR_REGISTRY:-intellidoc}-backend:latest
     container_name: intellidoc-backend
     restart: always
     env_file: .env
+    environment:
+      - APP_ENV=production
+      - DEBUG=false
+      - ML_INFERENCE_MODE=${ML_INFERENCE_MODE:-local}
+      - LLM_PROVIDER=${LLM_PROVIDER:-ollama}
+      - EMBEDDING_PROVIDER=${EMBEDDING_PROVIDER:-local}
     ports:
       - "8000:8000"
     depends_on:
@@ -32,7 +34,13 @@ services:
       - faiss_index:/app/rag/faiss_index
       - ml_models:/app/ml/models_cache
     healthcheck:
-      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      test:
+        [
+          "CMD",
+          "python",
+          "-c",
+          "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')",
+        ]
       interval: 30s
       timeout: 10s
       start_period: 60s

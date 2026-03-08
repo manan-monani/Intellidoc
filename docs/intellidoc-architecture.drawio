@@ -1,0 +1,550 @@
+<mxfile host="app.diagrams.net" modified="2026-03-08T00:00:00.000Z" agent="IntelliDoc" version="24.0.0" type="device">
+  <diagram id="aws-infra" name="AWS Infrastructure">
+    <mxGraphModel dx="2200" dy="1400" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1600" pageHeight="1200" math="0" shadow="1">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- ========== TITLE ========== -->
+        <mxCell id="title1" value="&lt;b&gt;IntelliDoc — AWS Production Architecture&lt;/b&gt;&lt;br&gt;Region: ap-south-1 (Mumbai)" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=20;fontColor=#232F3E;" vertex="1" parent="1">
+          <mxGeometry x="400" y="-60" width="550" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- ========== USERS ========== -->
+        <mxCell id="users" value="&lt;b&gt;Users&lt;/b&gt;&lt;br&gt;(Browser / Mobile)" style="shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.users;labelBackgroundColor=none;sketch=0;fontStyle=0;fontSize=12;fontColor=#232F3E;align=center;verticalLabelPosition=bottom;" vertex="1" parent="1">
+          <mxGeometry x="610" y="0" width="60" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- ========== GITHUB ========== -->
+        <mxCell id="github" value="&lt;b&gt;GitHub&lt;/b&gt;&lt;br&gt;manan-monani/Intellidoc" style="shape=image;verticalLabelPosition=bottom;labelBackgroundColor=none;imageBackgroundColor=none;imageBorder=none;image=https://cdn-icons-png.flaticon.com/512/25/25231.png;fontSize=11;fontColor=#232F3E;" vertex="1" parent="1">
+          <mxGeometry x="30" y="0" width="50" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- ========== AWS CLOUD BOX ========== -->
+        <mxCell id="aws_cloud" value="" style="points=[[0,0],[0.25,0],[0.5,0],[0.75,0],[1,0],[1,0.25],[1,0.5],[1,0.75],[1,1],[0.75,1],[0.5,1],[0.25,1],[0,1],[0,0.75],[0,0.5],[0,0.25]];outlineConnect=0;gradientColor=none;html=1;whiteSpace=wrap;fontSize=12;fontStyle=0;shape=mxgraph.aws4.group;grIcon=mxgraph.aws4.group_aws_cloud_alt;stroke=#232F3E;fillColor=none;verticalAlign=top;align=left;spacingLeft=30;fontColor=#232F3E;dashed=0;container=1;" vertex="1" parent="1">
+          <mxGeometry x="80" y="80" width="1150" height="980" as="geometry" />
+        </mxCell>
+
+        <!-- Region label -->
+        <mxCell id="region_label" value="&lt;b&gt;AWS Cloud — ap-south-1 (Mumbai)&lt;/b&gt;" style="text;html=1;align=left;verticalAlign=top;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=13;fontColor=#232F3E;" vertex="1" parent="aws_cloud">
+          <mxGeometry x="40" y="5" width="260" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- ============ CLOUDFRONT ============ -->
+        <mxCell id="cloudfront" value="&lt;b&gt;CloudFront CDN&lt;/b&gt;&lt;br&gt;d1v52pph0zv9sb.cloudfront.net&lt;br&gt;&lt;font style=&quot;font-size:10px&quot;&gt;HTTPS • Global Edge Locations&lt;/font&gt;" style="outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#8C4FFF;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.cloudfront;" vertex="1" parent="aws_cloud">
+          <mxGeometry x="490" y="30" width="60" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- ============ VPC BOX ============ -->
+        <mxCell id="vpc" value="" style="points=[[0,0],[0.25,0],[0.5,0],[0.75,0],[1,0],[1,0.25],[1,0.5],[1,0.75],[1,1],[0.75,1],[0.5,1],[0.25,1],[0,1],[0,0.75],[0,0.5],[0,0.25]];outlineConnect=0;gradientColor=none;html=1;whiteSpace=wrap;fontSize=12;fontStyle=0;shape=mxgraph.aws4.group;grIcon=mxgraph.aws4.group_vpc2;stroke=#8C4FFF;fillColor=none;verticalAlign=top;align=left;spacingLeft=30;fontColor=#AAB7B8;dashed=0;container=1;" vertex="1" parent="aws_cloud">
+          <mxGeometry x="30" y="130" width="1090" height="830" as="geometry" />
+        </mxCell>
+
+        <mxCell id="vpc_label" value="&lt;b&gt;VPC&lt;/b&gt; — 10.0.0.0/16" style="text;html=1;align=left;verticalAlign=top;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=12;fontColor=#8C4FFF;" vertex="1" parent="vpc">
+          <mxGeometry x="40" y="5" width="140" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- ============ PUBLIC SUBNET A ============ -->
+        <mxCell id="public_a" value="" style="points=[[0,0],[0.25,0],[0.5,0],[0.75,0],[1,0],[1,0.25],[1,0.5],[1,0.75],[1,1],[0.75,1],[0.5,1],[0.25,1],[0,1],[0,0.75],[0,0.5],[0,0.25]];outlineConnect=0;gradientColor=none;html=1;whiteSpace=wrap;fontSize=12;fontStyle=0;shape=mxgraph.aws4.group;grIcon=mxgraph.aws4.group_security_group;grStroke=0;strokeColor=#7AA116;fillColor=#E9F3E6;verticalAlign=top;align=left;spacingLeft=30;fontColor=#248814;dashed=0;container=1;" vertex="1" parent="vpc">
+          <mxGeometry x="20" y="40" width="510" height="200" as="geometry" />
+        </mxCell>
+
+        <mxCell id="pub_a_label" value="&lt;b&gt;Public Subnet A&lt;/b&gt; — 10.0.1.0/24 (AZ-a)" style="text;html=1;align=left;verticalAlign=top;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=11;fontColor=#248814;" vertex="1" parent="public_a">
+          <mxGeometry x="30" y="5" width="270" height="25" as="geometry" />
+        </mxCell>
+
+        <!-- ALB -->
+        <mxCell id="alb" value="&lt;b&gt;Application&lt;br&gt;Load Balancer&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;Port 80 (HTTP)&lt;br&gt;SG: 80, 443 open&lt;/font&gt;" style="outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#8C4FFF;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=11;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.elasticloadbalancing;" vertex="1" parent="public_a">
+          <mxGeometry x="80" y="60" width="55" height="55" as="geometry" />
+        </mxCell>
+
+        <!-- NAT Gateway -->
+        <mxCell id="nat" value="&lt;b&gt;NAT Gateway&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;Elastic IP&lt;br&gt;Outbound for private&lt;/font&gt;" style="outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#8C4FFF;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=11;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.nat_gateway;" vertex="1" parent="public_a">
+          <mxGeometry x="320" y="60" width="55" height="55" as="geometry" />
+        </mxCell>
+
+        <!-- Internet Gateway -->
+        <mxCell id="igw" value="&lt;b&gt;Internet&lt;br&gt;Gateway&lt;/b&gt;" style="outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#8C4FFF;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=11;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.internet_gateway;" vertex="1" parent="public_a">
+          <mxGeometry x="430" y="60" width="55" height="55" as="geometry" />
+        </mxCell>
+
+        <!-- ============ PUBLIC SUBNET B ============ -->
+        <mxCell id="public_b" value="" style="points=[[0,0],[0.25,0],[0.5,0],[0.75,0],[1,0],[1,0.25],[1,0.5],[1,0.75],[1,1],[0.75,1],[0.5,1],[0.25,1],[0,1],[0,0.75],[0,0.5],[0,0.25]];outlineConnect=0;gradientColor=none;html=1;whiteSpace=wrap;fontSize=12;fontStyle=0;shape=mxgraph.aws4.group;grIcon=mxgraph.aws4.group_security_group;grStroke=0;strokeColor=#7AA116;fillColor=#E9F3E6;verticalAlign=top;align=left;spacingLeft=30;fontColor=#248814;dashed=0;container=1;" vertex="1" parent="vpc">
+          <mxGeometry x="560" y="40" width="510" height="200" as="geometry" />
+        </mxCell>
+
+        <mxCell id="pub_b_label" value="&lt;b&gt;Public Subnet B&lt;/b&gt; — 10.0.2.0/24 (AZ-b)" style="text;html=1;align=left;verticalAlign=top;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=11;fontColor=#248814;" vertex="1" parent="public_b">
+          <mxGeometry x="30" y="5" width="270" height="25" as="geometry" />
+        </mxCell>
+
+        <mxCell id="alb_b" value="&lt;font style=&quot;font-size:9px&quot;&gt;ALB also spans&lt;br&gt;this subnet (HA)&lt;/font&gt;" style="outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#8C4FFF;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=11;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.elasticloadbalancing;opacity=40;" vertex="1" parent="public_b">
+          <mxGeometry x="80" y="60" width="55" height="55" as="geometry" />
+        </mxCell>
+
+        <!-- ============ PRIVATE SUBNET A ============ -->
+        <mxCell id="private_a" value="" style="points=[[0,0],[0.25,0],[0.5,0],[0.75,0],[1,0],[1,0.25],[1,0.5],[1,0.75],[1,1],[0.75,1],[0.5,1],[0.25,1],[0,1],[0,0.75],[0,0.5],[0,0.25]];outlineConnect=0;gradientColor=none;html=1;whiteSpace=wrap;fontSize=12;fontStyle=0;shape=mxgraph.aws4.group;grIcon=mxgraph.aws4.group_security_group;grStroke=0;strokeColor=#147EBA;fillColor=#E6F2F8;verticalAlign=top;align=left;spacingLeft=30;fontColor=#147EBA;dashed=0;container=1;" vertex="1" parent="vpc">
+          <mxGeometry x="20" y="280" width="510" height="530" as="geometry" />
+        </mxCell>
+
+        <mxCell id="priv_a_label" value="&lt;b&gt;Private Subnet A&lt;/b&gt; — 10.0.10.0/24 (AZ-a)" style="text;html=1;align=left;verticalAlign=top;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=11;fontColor=#147EBA;" vertex="1" parent="private_a">
+          <mxGeometry x="30" y="5" width="280" height="25" as="geometry" />
+        </mxCell>
+
+        <!-- ECS Fargate -->
+        <mxCell id="ecs" value="&lt;b&gt;ECS Fargate&lt;/b&gt;&lt;br&gt;intellidoc-backend&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;1 vCPU • 3 GB • Port 8000&lt;br&gt;Auto-scale: 1–4 tasks&lt;br&gt;CPU 70% / Memory 80%&lt;/font&gt;" style="outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#ED7100;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=11;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.ecs;" vertex="1" parent="private_a">
+          <mxGeometry x="75" y="50" width="60" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- Container inside ECS -->
+        <mxCell id="container" value="&lt;b&gt;FastAPI Container&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;Python 3.11 • Uvicorn&lt;br&gt;OCR (Tesseract)&lt;br&gt;NER (BERT in-container)&lt;br&gt;Classification / Summarization&lt;br&gt;RAG Q&amp;A Engine&lt;/font&gt;" style="shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.fargate;fillColor=#ED7100;strokeColor=none;fontColor=#232F3E;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=10;fontStyle=0;" vertex="1" parent="private_a">
+          <mxGeometry x="230" y="50" width="55" height="55" as="geometry" />
+        </mxCell>
+
+        <!-- RDS PostgreSQL -->
+        <mxCell id="rds" value="&lt;b&gt;RDS PostgreSQL 16&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;db.t3.micro • 20 GB&lt;br&gt;Encrypted • Backup 1d&lt;br&gt;Port 5432&lt;/font&gt;" style="outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#C925D1;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=11;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.rds;" vertex="1" parent="private_a">
+          <mxGeometry x="70" y="240" width="60" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- Redis -->
+        <mxCell id="redis" value="&lt;b&gt;ElastiCache Redis 7.1&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;cache.t3.micro&lt;br&gt;1 node • Port 6379&lt;/font&gt;" style="outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#C925D1;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=11;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.elasticache;" vertex="1" parent="private_a">
+          <mxGeometry x="230" y="240" width="60" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- EFS -->
+        <mxCell id="efs" value="&lt;b&gt;EFS (FAISS Index)&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;Encrypted • Shared across tasks&lt;br&gt;Mount: /app/rag/faiss_index&lt;/font&gt;" style="outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#3F8624;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=11;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.elastic_file_system;" vertex="1" parent="private_a">
+          <mxGeometry x="390" y="240" width="60" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- ============ PRIVATE SUBNET B ============ -->
+        <mxCell id="private_b" value="" style="points=[[0,0],[0.25,0],[0.5,0],[0.75,0],[1,0],[1,0.25],[1,0.5],[1,0.75],[1,1],[0.75,1],[0.5,1],[0.25,1],[0,1],[0,0.75],[0,0.5],[0,0.25]];outlineConnect=0;gradientColor=none;html=1;whiteSpace=wrap;fontSize=12;fontStyle=0;shape=mxgraph.aws4.group;grIcon=mxgraph.aws4.group_security_group;grStroke=0;strokeColor=#147EBA;fillColor=#E6F2F8;verticalAlign=top;align=left;spacingLeft=30;fontColor=#147EBA;dashed=0;container=1;" vertex="1" parent="vpc">
+          <mxGeometry x="560" y="280" width="510" height="530" as="geometry" />
+        </mxCell>
+
+        <mxCell id="priv_b_label" value="&lt;b&gt;Private Subnet B&lt;/b&gt; — 10.0.11.0/24 (AZ-b)" style="text;html=1;align=left;verticalAlign=top;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=11;fontColor=#147EBA;" vertex="1" parent="private_b">
+          <mxGeometry x="30" y="5" width="280" height="25" as="geometry" />
+        </mxCell>
+
+        <mxCell id="ecs_b" value="&lt;font style=&quot;font-size:9px&quot;&gt;ECS tasks can also&lt;br&gt;run here (HA)&lt;/font&gt;" style="outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#ED7100;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=11;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.ecs;opacity=40;" vertex="1" parent="private_b">
+          <mxGeometry x="75" y="50" width="60" height="60" as="geometry" />
+        </mxCell>
+
+        <mxCell id="rds_b" value="&lt;font style=&quot;font-size:9px&quot;&gt;RDS Subnet Group&lt;br&gt;(Standby AZ)&lt;/font&gt;" style="outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#C925D1;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=11;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.rds;opacity=40;" vertex="1" parent="private_b">
+          <mxGeometry x="70" y="240" width="60" height="60" as="geometry" />
+        </mxCell>
+
+        <mxCell id="redis_b" value="&lt;font style=&quot;font-size:9px&quot;&gt;Redis Subnet&lt;br&gt;Group (HA)&lt;/font&gt;" style="outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#C925D1;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=11;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.elasticache;opacity=40;" vertex="1" parent="private_b">
+          <mxGeometry x="230" y="240" width="60" height="60" as="geometry" />
+        </mxCell>
+
+        <mxCell id="efs_b" value="&lt;font style=&quot;font-size:9px&quot;&gt;EFS Mount Target&lt;br&gt;(AZ-b)&lt;/font&gt;" style="outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#3F8624;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=11;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.elastic_file_system;opacity=40;" vertex="1" parent="private_b">
+          <mxGeometry x="390" y="240" width="60" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- ============ EXTERNAL AWS SERVICES (outside VPC) ============ -->
+
+        <!-- S3 Documents -->
+        <mxCell id="s3_docs" value="&lt;b&gt;S3 — Documents&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;intellidoc-documents-*&lt;br&gt;Encrypted • Versioned&lt;br&gt;Document uploads&lt;/font&gt;" style="outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#3F8624;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=11;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.s3;" vertex="1" parent="aws_cloud">
+          <mxGeometry x="990" y="30" width="55" height="55" as="geometry" />
+        </mxCell>
+
+        <!-- S3 Frontend (next to CloudFront) -->
+        <mxCell id="s3_frontend" value="&lt;b&gt;S3 — Frontend&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;intellidoc-frontend-*&lt;br&gt;React SPA (Vite)&lt;br&gt;OAC → CloudFront only&lt;/font&gt;" style="outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#3F8624;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=11;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.s3;" vertex="1" parent="aws_cloud">
+          <mxGeometry x="690" y="30" width="55" height="55" as="geometry" />
+        </mxCell>
+
+        <!-- Bedrock -->
+        <mxCell id="bedrock" value="&lt;b&gt;AWS Bedrock&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;Claude 3 Haiku — Classify/Summarize/Q&amp;A&lt;br&gt;Titan Embed v2 — Vectors (1024-dim)&lt;/font&gt;" style="outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#01A88D;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=11;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.sagemaker;" vertex="1" parent="aws_cloud">
+          <mxGeometry x="850" y="30" width="55" height="55" as="geometry" />
+        </mxCell>
+
+        <!-- ECR -->
+        <mxCell id="ecr" value="&lt;b&gt;ECR&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;intellidoc-backend&lt;br&gt;Docker Registry&lt;br&gt;Keep 10 images&lt;/font&gt;" style="outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#ED7100;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=11;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.ecr;" vertex="1" parent="aws_cloud">
+          <mxGeometry x="30" y="140" width="50" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- Secrets Manager -->
+        <mxCell id="secrets" value="&lt;b&gt;Secrets Manager&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;DB_PASSWORD&lt;br&gt;JWT_SECRET_KEY&lt;br&gt;APP_SECRET_KEY&lt;/font&gt;" style="outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#DD344C;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=11;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.secrets_manager;" vertex="1" parent="aws_cloud">
+          <mxGeometry x="1080" y="140" width="50" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- CloudWatch -->
+        <mxCell id="cloudwatch" value="&lt;b&gt;CloudWatch&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;Logs, Alarms, Metrics&lt;br&gt;ECS CPU/Memory&lt;br&gt;RDS CPU • ALB 5XX&lt;/font&gt;" style="outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#E7157B;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=11;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.cloudwatch_2;" vertex="1" parent="aws_cloud">
+          <mxGeometry x="1080" y="280" width="50" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- IAM OIDC -->
+        <mxCell id="iam" value="&lt;b&gt;IAM OIDC&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;GitHub Actions Role&lt;br&gt;ECS Execution Role&lt;br&gt;ECS Task Role&lt;/font&gt;" style="outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#DD344C;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=11;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.identity_and_access_management;" vertex="1" parent="aws_cloud">
+          <mxGeometry x="30" y="280" width="50" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- ============ CONNECTIONS ============ -->
+
+        <!-- Users → CloudFront -->
+        <mxCell id="e1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#232F3E;strokeWidth=2;fontColor=#232F3E;fontSize=10;" edge="1" source="users" target="cloudfront" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e1_label" value="HTTPS" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;fontColor=#232F3E;fontStyle=1;" vertex="1" connectable="0" parent="e1">
+          <mxGeometry x="-0.2" relative="1" as="geometry"><mxPoint as="offset" /></mxGeometry>
+        </mxCell>
+
+        <!-- CloudFront → S3 Frontend -->
+        <mxCell id="e2" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#3F8624;strokeWidth=2;dashed=1;" edge="1" source="cloudfront" target="s3_frontend" parent="aws_cloud">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2_label" value="Static&lt;br&gt;Assets" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=9;fontColor=#3F8624;" vertex="1" connectable="0" parent="e2">
+          <mxGeometry x="-0.2" relative="1" as="geometry"><mxPoint as="offset" /></mxGeometry>
+        </mxCell>
+
+        <!-- CloudFront → ALB (API) -->
+        <mxCell id="e3" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#8C4FFF;strokeWidth=2;" edge="1" source="cloudfront" target="alb" parent="aws_cloud">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3_label" value="/api/*" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;fontColor=#8C4FFF;fontStyle=1;" vertex="1" connectable="0" parent="e3">
+          <mxGeometry x="-0.3" relative="1" as="geometry"><mxPoint as="offset" /></mxGeometry>
+        </mxCell>
+
+        <!-- ALB → ECS -->
+        <mxCell id="e4" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#ED7100;strokeWidth=2;" edge="1" source="alb" target="ecs" parent="vpc">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4_label" value="Port 8000" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=9;fontColor=#ED7100;" vertex="1" connectable="0" parent="e4">
+          <mxGeometry x="-0.2" relative="1" as="geometry"><mxPoint as="offset" /></mxGeometry>
+        </mxCell>
+
+        <!-- ECS → RDS -->
+        <mxCell id="e5" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#C925D1;strokeWidth=1.5;" edge="1" source="ecs" target="rds" parent="private_a">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e5_label" value="5432" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=9;fontColor=#C925D1;" vertex="1" connectable="0" parent="e5">
+          <mxGeometry relative="1" as="geometry"><mxPoint as="offset" /></mxGeometry>
+        </mxCell>
+
+        <!-- ECS → Redis -->
+        <mxCell id="e6" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#C925D1;strokeWidth=1.5;" edge="1" source="container" target="redis" parent="private_a">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e6_label" value="6379" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=9;fontColor=#C925D1;" vertex="1" connectable="0" parent="e6">
+          <mxGeometry relative="1" as="geometry"><mxPoint as="offset" /></mxGeometry>
+        </mxCell>
+
+        <!-- ECS → EFS -->
+        <mxCell id="e7" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#3F8624;strokeWidth=1.5;" edge="1" source="container" target="efs" parent="private_a">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e7_label" value="NFS 2049" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=9;fontColor=#3F8624;" vertex="1" connectable="0" parent="e7">
+          <mxGeometry relative="1" as="geometry"><mxPoint as="offset" /></mxGeometry>
+        </mxCell>
+
+        <!-- ECS → S3 Docs -->
+        <mxCell id="e8" style="rounded=1;strokeColor=#3F8624;strokeWidth=1.5;dashed=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" source="container" target="s3_docs" parent="aws_cloud">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e8_label" value="Upload/Download" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=9;fontColor=#3F8624;" vertex="1" connectable="0" parent="e8">
+          <mxGeometry relative="1" as="geometry"><mxPoint as="offset" /></mxGeometry>
+        </mxCell>
+
+        <!-- ECS → Bedrock -->
+        <mxCell id="e9" style="rounded=1;strokeColor=#01A88D;strokeWidth=1.5;dashed=1;exitX=1;exitY=0;exitDx=0;exitDy=0;" edge="1" source="container" target="bedrock" parent="aws_cloud">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e9_label" value="InvokeModel API" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=9;fontColor=#01A88D;" vertex="1" connectable="0" parent="e9">
+          <mxGeometry relative="1" as="geometry"><mxPoint as="offset" /></mxGeometry>
+        </mxCell>
+
+        <!-- GitHub → ECR -->
+        <mxCell id="e10" style="rounded=1;strokeColor=#ED7100;strokeWidth=1.5;dashed=1;" edge="1" source="github" target="ecr" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e10_label" value="Docker Push&lt;br&gt;(GitHub Actions)" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=9;fontColor=#ED7100;" vertex="1" connectable="0" parent="e10">
+          <mxGeometry relative="1" as="geometry"><mxPoint as="offset" /></mxGeometry>
+        </mxCell>
+
+        <!-- GitHub → S3 Frontend -->
+        <mxCell id="e11" style="rounded=1;strokeColor=#3F8624;strokeWidth=1.5;dashed=1;" edge="1" source="github" target="s3_frontend" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e11_label" value="npm build → S3 sync" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=9;fontColor=#3F8624;" vertex="1" connectable="0" parent="e11">
+          <mxGeometry relative="1" as="geometry"><mxPoint as="offset" /></mxGeometry>
+        </mxCell>
+
+        <!-- NAT → IGW -->
+        <mxCell id="e12" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#7AA116;strokeWidth=1;" edge="1" source="nat" target="igw" parent="public_a">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+
+  <!-- ==================== PAGE 2: CI/CD + PROJECT WORKFLOW ==================== -->
+  <diagram id="cicd-workflow" name="CI/CD &amp; Project Workflow">
+    <mxGraphModel dx="1800" dy="1200" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1400" pageHeight="900" math="0" shadow="1">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- TITLE -->
+        <mxCell id="t2" value="&lt;b&gt;IntelliDoc — CI/CD Pipeline &amp; Application Workflow&lt;/b&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=18;fontColor=#232F3E;" vertex="1" parent="1">
+          <mxGeometry x="350" y="10" width="500" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- ========== CI/CD PIPELINE (TOP SECTION) ========== -->
+        <mxCell id="cicd_box" value="&lt;b&gt;CI/CD Pipeline — Automated Deployment&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F5F5F5;strokeColor=#666666;verticalAlign=top;fontColor=#333333;fontSize=14;container=1;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="30" y="60" width="1150" height="260" as="geometry" />
+        </mxCell>
+
+        <!-- Developer -->
+        <mxCell id="dev" value="&lt;b&gt;Developer&lt;/b&gt;&lt;br&gt;git push" style="shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.users;labelBackgroundColor=none;sketch=0;fontColor=#232F3E;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=10;" vertex="1" parent="cicd_box">
+          <mxGeometry x="30" y="70" width="50" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- GitHub -->
+        <mxCell id="gh2" value="&lt;b&gt;GitHub&lt;/b&gt;&lt;br&gt;main branch&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;Push triggers workflow&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#24292E;fontColor=#FFFFFF;strokeColor=none;fontSize=11;verticalAlign=middle;" vertex="1" parent="cicd_box">
+          <mxGeometry x="140" y="75" width="130" height="55" as="geometry" />
+        </mxCell>
+
+        <!-- GitHub Actions -->
+        <mxCell id="gha" value="&lt;b&gt;GitHub Actions&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;OIDC Auth → AWS&lt;br&gt;No stored credentials&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#2088FF;fontColor=#FFFFFF;strokeColor=none;fontSize=11;verticalAlign=middle;" vertex="1" parent="cicd_box">
+          <mxGeometry x="330" y="45" width="140" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- Backend Build -->
+        <mxCell id="be_build" value="&lt;b&gt;Backend Job&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;docker build → ECR push&lt;br&gt;Register task def&lt;br&gt;Update ECS service&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ED7100;fontColor=#FFFFFF;strokeColor=none;fontSize=10;verticalAlign=middle;" vertex="1" parent="cicd_box">
+          <mxGeometry x="540" y="35" width="155" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- Frontend Build -->
+        <mxCell id="fe_build" value="&lt;b&gt;Frontend Job&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;npm ci → npm run build&lt;br&gt;S3 sync → CF invalidation&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#3F8624;fontColor=#FFFFFF;strokeColor=none;fontSize=10;verticalAlign=middle;" vertex="1" parent="cicd_box">
+          <mxGeometry x="540" y="115" width="155" height="55" as="geometry" />
+        </mxCell>
+
+        <!-- ECR -->
+        <mxCell id="ecr2" value="&lt;b&gt;ECR&lt;/b&gt;&lt;br&gt;Docker Registry" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ED7100;fontColor=#FFFFFF;strokeColor=none;fontSize=10;verticalAlign=middle;" vertex="1" parent="cicd_box">
+          <mxGeometry x="760" y="40" width="110" height="45" as="geometry" />
+        </mxCell>
+
+        <!-- ECS Deploy -->
+        <mxCell id="ecs2" value="&lt;b&gt;ECS Fargate&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;Rolling deployment&lt;br&gt;Zero downtime&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ED7100;fontColor=#FFFFFF;strokeColor=none;fontSize=10;verticalAlign=middle;" vertex="1" parent="cicd_box">
+          <mxGeometry x="935" y="40" width="120" height="45" as="geometry" />
+        </mxCell>
+
+        <!-- S3 + CF -->
+        <mxCell id="s3cf" value="&lt;b&gt;S3 + CloudFront&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;Static hosting&lt;br&gt;Cache invalidation&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#8C4FFF;fontColor=#FFFFFF;strokeColor=none;fontSize=10;verticalAlign=middle;" vertex="1" parent="cicd_box">
+          <mxGeometry x="935" y="115" width="120" height="45" as="geometry" />
+        </mxCell>
+
+        <!-- LIVE indicator -->
+        <mxCell id="live" value="&lt;b&gt;🟢 LIVE&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px&quot;&gt;d1v52pph0zv9sb.cloudfront.net&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D5E8D4;strokeColor=#82B366;fontSize=12;verticalAlign=middle;fontColor=#333333;" vertex="1" parent="cicd_box">
+          <mxGeometry x="910" y="190" width="230" height="45" as="geometry" />
+        </mxCell>
+
+        <!-- CI/CD Arrows -->
+        <mxCell id="ca1" style="rounded=1;strokeWidth=2;strokeColor=#333333;" edge="1" source="dev" target="gh2" parent="cicd_box">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ca2" style="rounded=1;strokeWidth=2;strokeColor=#2088FF;" edge="1" source="gh2" target="gha" parent="cicd_box">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ca3" style="rounded=1;strokeWidth=1.5;strokeColor=#ED7100;" edge="1" source="gha" target="be_build" parent="cicd_box">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ca4" style="rounded=1;strokeWidth=1.5;strokeColor=#3F8624;" edge="1" source="gha" target="fe_build" parent="cicd_box">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ca5" style="rounded=1;strokeWidth=1.5;strokeColor=#ED7100;" edge="1" source="be_build" target="ecr2" parent="cicd_box">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ca6" style="rounded=1;strokeWidth=1.5;strokeColor=#ED7100;" edge="1" source="ecr2" target="ecs2" parent="cicd_box">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ca7" style="rounded=1;strokeWidth=1.5;strokeColor=#3F8624;" edge="1" source="fe_build" target="s3cf" parent="cicd_box">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ca8" style="rounded=1;strokeWidth=1.5;strokeColor=#82B366;dashed=1;" edge="1" source="ecs2" target="live" parent="cicd_box">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ca9" style="rounded=1;strokeWidth=1.5;strokeColor=#82B366;dashed=1;" edge="1" source="s3cf" target="live" parent="cicd_box">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- ========== APPLICATION WORKFLOW (BOTTOM SECTION) ========== -->
+        <mxCell id="app_box" value="&lt;b&gt;Application Data Flow — Document Processing Pipeline&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F5F5F5;strokeColor=#666666;verticalAlign=top;fontColor=#333333;fontSize=14;container=1;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="30" y="350" width="1150" height="530" as="geometry" />
+        </mxCell>
+
+        <!-- User -->
+        <mxCell id="user2" value="&lt;b&gt;User&lt;/b&gt;" style="shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.users;labelBackgroundColor=none;sketch=0;fontColor=#232F3E;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=11;" vertex="1" parent="app_box">
+          <mxGeometry x="30" y="50" width="50" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- React Frontend -->
+        <mxCell id="react" value="&lt;b&gt;React Frontend&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;Dashboard • Upload • Documents&lt;br&gt;Q&amp;A Chat • Analytics&lt;br&gt;Vite • Axios • React Router&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#61DAFB;fontColor=#333333;strokeColor=#333333;fontSize=11;verticalAlign=middle;" vertex="1" parent="app_box">
+          <mxGeometry x="140" y="45" width="175" height="70" as="geometry" />
+        </mxCell>
+
+        <!-- FastAPI Backend -->
+        <mxCell id="fastapi" value="&lt;b&gt;FastAPI Backend&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;REST API • JWT Auth&lt;br&gt;Async • SQLAlchemy&lt;br&gt;Port 8000&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#009688;fontColor=#FFFFFF;strokeColor=none;fontSize=11;verticalAlign=middle;" vertex="1" parent="app_box">
+          <mxGeometry x="400" y="45" width="160" height="70" as="geometry" />
+        </mxCell>
+
+        <!-- Auth Module -->
+        <mxCell id="auth" value="&lt;b&gt;Auth Service&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;JWT • Register/Login&lt;br&gt;Password hashing&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF3E0;fontColor=#333333;strokeColor=#FF9800;fontSize=10;verticalAlign=middle;" vertex="1" parent="app_box">
+          <mxGeometry x="130" y="160" width="130" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- Document Service -->
+        <mxCell id="doc_svc" value="&lt;b&gt;Document Service&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;Upload • List • Delete&lt;br&gt;S3 integration&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF3E0;fontColor=#333333;strokeColor=#FF9800;fontSize=10;verticalAlign=middle;" vertex="1" parent="app_box">
+          <mxGeometry x="300" y="160" width="130" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- ML Pipeline -->
+        <mxCell id="ml_pipeline" value="&lt;b&gt;ML Pipeline&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;Process documents end-to-end&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF3E0;fontColor=#333333;strokeColor=#FF9800;fontSize=10;verticalAlign=middle;" vertex="1" parent="app_box">
+          <mxGeometry x="470" y="160" width="130" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- RAG Engine -->
+        <mxCell id="rag_engine" value="&lt;b&gt;RAG Q&amp;A Engine&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;Ask questions about docs&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF3E0;fontColor=#333333;strokeColor=#FF9800;fontSize=10;verticalAlign=middle;" vertex="1" parent="app_box">
+          <mxGeometry x="640" y="160" width="130" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- OCR -->
+        <mxCell id="ocr" value="&lt;b&gt;OCR&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;Tesseract + PyPDF2&lt;br&gt;Text extraction&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E3F2FD;fontColor=#333333;strokeColor=#1565C0;fontSize=10;verticalAlign=middle;" vertex="1" parent="app_box">
+          <mxGeometry x="200" y="270" width="120" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- Classifier -->
+        <mxCell id="classifier" value="&lt;b&gt;Classifier&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;Bedrock Claude 3 Haiku&lt;br&gt;or local BART&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E3F2FD;fontColor=#333333;strokeColor=#1565C0;fontSize=10;verticalAlign=middle;" vertex="1" parent="app_box">
+          <mxGeometry x="360" y="270" width="130" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- NER -->
+        <mxCell id="ner" value="&lt;b&gt;NER&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;In-container BERT&lt;br&gt;Entity extraction&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E3F2FD;fontColor=#333333;strokeColor=#1565C0;fontSize=10;verticalAlign=middle;" vertex="1" parent="app_box">
+          <mxGeometry x="530" y="270" width="120" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- Summarizer -->
+        <mxCell id="summarizer" value="&lt;b&gt;Summarizer&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;Bedrock Claude 3 Haiku&lt;br&gt;or local BART&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E3F2FD;fontColor=#333333;strokeColor=#1565C0;fontSize=10;verticalAlign=middle;" vertex="1" parent="app_box">
+          <mxGeometry x="690" y="270" width="130" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- Embeddings -->
+        <mxCell id="embeddings" value="&lt;b&gt;Embeddings&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;Bedrock Titan v2 (1024d)&lt;br&gt;or local sentence-transformers (384d)&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E3F2FD;fontColor=#333333;strokeColor=#1565C0;fontSize=10;verticalAlign=middle;" vertex="1" parent="app_box">
+          <mxGeometry x="860" y="270" width="175" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- FAISS Vector Store -->
+        <mxCell id="faiss" value="&lt;b&gt;FAISS Vector Store&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;Stored on EFS&lt;br&gt;Similarity search&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3E5F5;fontColor=#333333;strokeColor=#7B1FA2;fontSize=10;verticalAlign=middle;" vertex="1" parent="app_box">
+          <mxGeometry x="880" y="370" width="140" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- PostgreSQL -->
+        <mxCell id="pg" value="&lt;b&gt;PostgreSQL&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;Users • Documents&lt;br&gt;Processing jobs&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8EAF6;fontColor=#333333;strokeColor=#283593;fontSize=10;verticalAlign=middle;shape=cylinder3;size=5;" vertex="1" parent="app_box">
+          <mxGeometry x="200" y="380" width="120" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- S3 Bucket -->
+        <mxCell id="s3b" value="&lt;b&gt;S3 Bucket&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;Original documents&lt;br&gt;PDF, Images, DOCX&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F5E9;fontColor=#333333;strokeColor=#2E7D32;fontSize=10;verticalAlign=middle;" vertex="1" parent="app_box">
+          <mxGeometry x="400" y="380" width="120" height="55" as="geometry" />
+        </mxCell>
+
+        <!-- Bedrock -->
+        <mxCell id="bedrock2" value="&lt;b&gt;AWS Bedrock&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;Claude 3 Haiku — LLM&lt;br&gt;Titan Embed v2 — Vectors&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E0F7FA;fontColor=#333333;strokeColor=#00838F;fontSize=10;verticalAlign=middle;" vertex="1" parent="app_box">
+          <mxGeometry x="600" y="380" width="165" height="55" as="geometry" />
+        </mxCell>
+
+        <!-- Application Flow Arrows -->
+        <mxCell id="fa1" style="rounded=1;strokeWidth=2;strokeColor=#333333;" edge="1" source="user2" target="react" parent="app_box">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="fa2" style="rounded=1;strokeWidth=2;strokeColor=#009688;" edge="1" source="react" target="fastapi" parent="app_box">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="fa2l" value="REST API" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=9;fontColor=#009688;fontStyle=1;" vertex="1" connectable="0" parent="fa2">
+          <mxGeometry relative="1" as="geometry"><mxPoint as="offset" /></mxGeometry>
+        </mxCell>
+
+        <!-- FastAPI → Services -->
+        <mxCell id="fa3" style="rounded=1;strokeWidth=1.5;strokeColor=#FF9800;" edge="1" source="fastapi" target="auth" parent="app_box">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="fa4" style="rounded=1;strokeWidth=1.5;strokeColor=#FF9800;" edge="1" source="fastapi" target="doc_svc" parent="app_box">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="fa5" style="rounded=1;strokeWidth=1.5;strokeColor=#FF9800;" edge="1" source="fastapi" target="ml_pipeline" parent="app_box">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="fa6" style="rounded=1;strokeWidth=1.5;strokeColor=#FF9800;" edge="1" source="fastapi" target="rag_engine" parent="app_box">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- ML Pipeline → ML Modules -->
+        <mxCell id="fa7" style="rounded=1;strokeWidth=1;strokeColor=#1565C0;" edge="1" source="ml_pipeline" target="ocr" parent="app_box">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="fa8" style="rounded=1;strokeWidth=1;strokeColor=#1565C0;" edge="1" source="ml_pipeline" target="classifier" parent="app_box">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="fa9" style="rounded=1;strokeWidth=1;strokeColor=#1565C0;" edge="1" source="ml_pipeline" target="ner" parent="app_box">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="fa10" style="rounded=1;strokeWidth=1;strokeColor=#1565C0;" edge="1" source="ml_pipeline" target="summarizer" parent="app_box">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- RAG Engine → Embeddings → FAISS -->
+        <mxCell id="fa11" style="rounded=1;strokeWidth=1;strokeColor=#1565C0;" edge="1" source="rag_engine" target="embeddings" parent="app_box">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="fa12" style="rounded=1;strokeWidth=1;strokeColor=#7B1FA2;" edge="1" source="embeddings" target="faiss" parent="app_box">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Services → Data Stores -->
+        <mxCell id="fa13" style="rounded=1;strokeWidth=1;strokeColor=#283593;dashed=1;" edge="1" source="auth" target="pg" parent="app_box">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="fa14" style="rounded=1;strokeWidth=1;strokeColor=#283593;dashed=1;" edge="1" source="doc_svc" target="pg" parent="app_box">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="fa15" style="rounded=1;strokeWidth=1;strokeColor=#2E7D32;dashed=1;" edge="1" source="doc_svc" target="s3b" parent="app_box">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="fa16" style="rounded=1;strokeWidth=1;strokeColor=#00838F;dashed=1;" edge="1" source="classifier" target="bedrock2" parent="app_box">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="fa17" style="rounded=1;strokeWidth=1;strokeColor=#00838F;dashed=1;" edge="1" source="summarizer" target="bedrock2" parent="app_box">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="fa18" style="rounded=1;strokeWidth=1;strokeColor=#00838F;dashed=1;" edge="1" source="embeddings" target="bedrock2" parent="app_box">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="fa19" style="rounded=1;strokeWidth=1;strokeColor=#00838F;dashed=1;" edge="1" source="rag_engine" target="bedrock2" parent="app_box">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Pipeline Flow Numbers -->
+        <mxCell id="step1" value="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FF9800;fontColor=#FFFFFF;strokeColor=none;fontSize=12;fontStyle=1;" vertex="1" parent="app_box">
+          <mxGeometry x="120" y="35" width="25" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="step2" value="2" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FF9800;fontColor=#FFFFFF;strokeColor=none;fontSize=12;fontStyle=1;" vertex="1" parent="app_box">
+          <mxGeometry x="350" y="35" width="25" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="step3" value="3" style="ellipse;whiteSpace=wrap;html=1;fillColor=#1565C0;fontColor=#FFFFFF;strokeColor=none;fontSize=12;fontStyle=1;" vertex="1" parent="app_box">
+          <mxGeometry x="450" y="150" width="25" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="step4" value="4" style="ellipse;whiteSpace=wrap;html=1;fillColor=#1565C0;fontColor=#FFFFFF;strokeColor=none;fontSize=12;fontStyle=1;" vertex="1" parent="app_box">
+          <mxGeometry x="400" y="260" width="25" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="step5" value="5" style="ellipse;whiteSpace=wrap;html=1;fillColor=#7B1FA2;fontColor=#FFFFFF;strokeColor=none;fontSize=12;fontStyle=1;" vertex="1" parent="app_box">
+          <mxGeometry x="850" y="260" width="25" height="25" as="geometry" />
+        </mxCell>
+
+        <!-- Legend -->
+        <mxCell id="legend" value="&lt;b&gt;Flow:&lt;/b&gt;&lt;br&gt;① User interacts with React UI&lt;br&gt;② Frontend sends REST calls to FastAPI&lt;br&gt;③ FastAPI routes to services (Auth/Docs/ML/RAG)&lt;br&gt;④ ML modules process documents (OCR→Classify→NER→Summarize)&lt;br&gt;⑤ RAG: Embed text → FAISS index → Similarity search → LLM answer" style="text;html=1;align=left;verticalAlign=top;resizable=0;points=[];autosize=1;strokeColor=#999999;fillColor=#FFFFFF;fontSize=10;fontColor=#333333;rounded=1;" vertex="1" parent="app_box">
+          <mxGeometry x="30" y="450" width="380" height="80" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

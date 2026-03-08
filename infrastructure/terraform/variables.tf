@@ -111,3 +111,11 @@ variable "redis_node_type" {
   description = "ElastiCache Redis node type"
   default     = "cache.t3.micro"
 }
+
+# ── Custom Domain ────────────────────────────────────────────
+
+variable "custom_domain" {
+  description = "Custom domain for CloudFront (e.g. intellidoc.mooo.com). Leave empty to skip."
+  type        = string
+  default     = ""
+}

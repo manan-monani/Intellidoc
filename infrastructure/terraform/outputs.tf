@@ -56,3 +56,23 @@ output "cloudfront_distribution_id" {
   description = "CloudFront distribution ID (for cache invalidation)"
   value       = aws_cloudfront_distribution.frontend.id
 }
+
+output "acm_dns_validation" {
+  description = "DNS records to create for ACM certificate validation"
+  value = var.custom_domain != "" ? {
+    for dvo in aws_acm_certificate.cdn[0].domain_validation_options : dvo.domain_name => {
+      name  = dvo.resource_record_name
+      type  = dvo.resource_record_type
+      value = dvo.resource_record_value
+    }
+  } : {}
+}
+
+output "custom_domain_cname" {
+  description = "CNAME record to point your domain to CloudFront"
+  value = var.custom_domain != "" ? {
+    name  = var.custom_domain
+    type  = "CNAME"
+    value = aws_cloudfront_distribution.frontend.domain_name
+  } : {}
+}

@@ -99,10 +99,10 @@ app.add_middleware(
 
 
 # ── Include Routers ──────────────────────────────────────────
-app.include_router(auth_router, prefix="/api")
-app.include_router(documents_router, prefix="/api")
-app.include_router(ml_router, prefix="/api")
-app.include_router(rag_router, prefix="/api")
+app.include_router(auth_router)
+app.include_router(documents_router)
+app.include_router(ml_router)
+app.include_router(rag_router)
 
 
 # ── Health Check ─────────────────────────────────────────────

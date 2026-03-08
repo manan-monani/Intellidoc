@@ -84,7 +84,7 @@ resource "aws_ecs_task_definition" "backend" {
       { name = "BEDROCK_EMBED_MODEL_ID", value = var.bedrock_embed_model_id },
       { name = "GROQ_MODEL_ID", value = "llama-3.3-70b-versatile" },
       { name = "FAISS_INDEX_PATH", value = "/app/rag/faiss_index" },
-      { name = "CORS_ORIGINS", value = var.custom_domain != "" ? "https://${var.custom_domain},https://${aws_cloudfront_distribution.frontend.domain_name}" : "https://${aws_cloudfront_distribution.frontend.domain_name}" },
+      { name = "CORS_ORIGINS", value = "https://${aws_cloudfront_distribution.frontend.domain_name},https://intellidoc-orcin.vercel.app" },
     ]
 
     secrets = [

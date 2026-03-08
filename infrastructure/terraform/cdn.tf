@@ -2,20 +2,6 @@
 # IntelliDoc — CDN (CloudFront for Frontend + API Proxy)
 # ============================================================
 
-# ── ACM Certificate (us-east-1, required for CloudFront) ─────
-
-resource "aws_acm_certificate" "cdn" {
-  count    = var.custom_domain != "" ? 1 : 0
-  provider = aws.us_east_1
-
-  domain_name       = var.custom_domain
-  validation_method = "DNS"
-
-  lifecycle { create_before_destroy = true }
-
-  tags = { Name = "${var.project_name}-cdn-cert" }
-}
-
 # ── CloudFront Origin Access Control ─────────────────────────
 
 resource "aws_cloudfront_origin_access_control" "frontend" {
@@ -126,24 +112,9 @@ resource "aws_cloudfront_distribution" "frontend" {
     geo_restriction { restriction_type = "none" }
   }
 
-  # Use custom domain cert if provided, otherwise CloudFront default
-  dynamic "viewer_certificate" {
-    for_each = var.custom_domain != "" ? [1] : []
-    content {
-      acm_certificate_arn      = aws_acm_certificate.cdn[0].arn
-      ssl_support_method       = "sni-only"
-      minimum_protocol_version = "TLSv1.2_2021"
-    }
+  viewer_certificate {
+    cloudfront_default_certificate = true
   }
-
-  dynamic "viewer_certificate" {
-    for_each = var.custom_domain == "" ? [1] : []
-    content {
-      cloudfront_default_certificate = true
-    }
-  }
-
-  aliases = var.custom_domain != "" ? [var.custom_domain] : []
 
   tags = { Name = "${var.project_name}-cdn" }
 }

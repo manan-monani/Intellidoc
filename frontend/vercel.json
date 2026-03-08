@@ -1,0 +1,15 @@
+{
+  "framework": "vite",
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "rewrites": [
+    {
+      "source": "/api/:path(.*)",
+      "destination": "https://d1v52pph0zv9sb.cloudfront.net/api/:path"
+    },
+    {
+      "source": "/health",
+      "destination": "https://d1v52pph0zv9sb.cloudfront.net/health"
+    }
+  ]
+}

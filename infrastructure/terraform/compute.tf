@@ -77,11 +77,12 @@ resource "aws_ecs_task_definition" "backend" {
       { name = "REDIS_PORT", value = "6379" },
       { name = "AWS_REGION", value = var.aws_region },
       { name = "S3_BUCKET_NAME", value = aws_s3_bucket.documents.id },
-      { name = "ML_INFERENCE_MODE", value = "bedrock" },
-      { name = "LLM_PROVIDER", value = "bedrock" },
-      { name = "EMBEDDING_PROVIDER", value = "bedrock" },
+      { name = "ML_INFERENCE_MODE", value = "groq" },
+      { name = "LLM_PROVIDER", value = "groq" },
+      { name = "EMBEDDING_PROVIDER", value = "local" },
       { name = "BEDROCK_MODEL_ID", value = var.bedrock_model_id },
       { name = "BEDROCK_EMBED_MODEL_ID", value = var.bedrock_embed_model_id },
+      { name = "GROQ_MODEL_ID", value = "llama-3.3-70b-versatile" },
       { name = "FAISS_INDEX_PATH", value = "/app/rag/faiss_index" },
       { name = "CORS_ORIGINS", value = "https://${aws_cloudfront_distribution.frontend.domain_name}" },
     ]
@@ -98,6 +99,10 @@ resource "aws_ecs_task_definition" "backend" {
       {
         name      = "SECRET_KEY"
         valueFrom = "${aws_secretsmanager_secret.app_secrets.arn}:APP_SECRET_KEY::"
+      },
+      {
+        name      = "GROQ_API_KEY"
+        valueFrom = "${aws_secretsmanager_secret.app_secrets.arn}:GROQ_API_KEY::"
       },
     ]
 

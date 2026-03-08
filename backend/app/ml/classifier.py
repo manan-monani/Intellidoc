@@ -114,6 +114,8 @@ class DocumentClassifier:
         """
         if settings.ml_inference_mode == "bedrock":
             return self._classify_bedrock(text, top_k)
+        if settings.ml_inference_mode == "groq":
+            return self._classify_groq(text, top_k)
         return self._classify_local(text, top_k, max_length)
 
     def _classify_bedrock(self, text: str, top_k: int) -> dict:
@@ -121,6 +123,13 @@ class DocumentClassifier:
         from app.ml.bedrock_client import get_bedrock_client
 
         client = get_bedrock_client()
+        return client.classify(text, self.categories, top_k)
+
+    def _classify_groq(self, text: str, top_k: int) -> dict:
+        """Classify using Groq (free Llama 3.3)."""
+        from app.ml.groq_client import get_groq_client
+
+        client = get_groq_client()
         return client.classify(text, self.categories, top_k)
 
     def _classify_local(self, text: str, top_k: int, max_length: int) -> dict:

@@ -39,12 +39,13 @@ class S3Service:
 
     def __init__(self):
         """Initialize the S3 client with credentials from config."""
-        self.client = boto3.client(
-            "s3",
-            aws_access_key_id=settings.aws_access_key_id,
-            aws_secret_access_key=settings.aws_secret_access_key,
-            region_name=settings.aws_region,
-        )
+        # If explicit credentials are provided, use them (local dev).
+        # Otherwise, let boto3 auto-discover credentials (ECS task role).
+        client_kwargs = {"region_name": settings.aws_region}
+        if settings.aws_access_key_id and settings.aws_secret_access_key:
+            client_kwargs["aws_access_key_id"] = settings.aws_access_key_id
+            client_kwargs["aws_secret_access_key"] = settings.aws_secret_access_key
+        self.client = boto3.client("s3", **client_kwargs)
         self.bucket = settings.s3_bucket_name
 
     def upload_file(

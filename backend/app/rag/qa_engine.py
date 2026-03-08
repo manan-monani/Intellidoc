@@ -306,6 +306,12 @@ Answer:"""
 
                 client = get_bedrock_client()
                 return client.generate_qa_answer(question, context)
+            elif settings.llm_provider == "groq":
+                # Use Groq (free Llama 3.3) for LLM inference
+                from app.ml.groq_client import get_groq_client
+
+                client = get_groq_client()
+                return client.generate_qa_answer(question, context)
             else:
                 # Use Ollama for local LLM inference
                 response = ollama.chat(

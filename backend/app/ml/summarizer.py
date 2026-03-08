@@ -85,6 +85,8 @@ class TextSummarizer:
         """
         if settings.ml_inference_mode == "bedrock":
             return self._summarize_bedrock(text, max_length)
+        if settings.ml_inference_mode == "groq":
+            return self._summarize_groq(text, max_length)
         return self._summarize_local(text, max_length, min_length, max_input_length)
 
     def _summarize_bedrock(self, text: str, max_length: int) -> dict:
@@ -101,6 +103,29 @@ class TextSummarizer:
             }
 
         client = get_bedrock_client()
+        summary = client.summarize(text, max_length)
+
+        return {
+            "summary": summary,
+            "original_length": original_length,
+            "summary_length": len(summary),
+            "compression_ratio": round(len(summary) / original_length, 4),
+        }
+
+    def _summarize_groq(self, text: str, max_length: int) -> dict:
+        """Summarize using Groq (free Llama 3.3)."""
+        from app.ml.groq_client import get_groq_client
+
+        original_length = len(text)
+        if original_length < 100:
+            return {
+                "summary": text,
+                "original_length": original_length,
+                "summary_length": original_length,
+                "compression_ratio": 1.0,
+            }
+
+        client = get_groq_client()
         summary = client.summarize(text, max_length)
 
         return {

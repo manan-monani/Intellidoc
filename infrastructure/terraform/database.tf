@@ -72,5 +72,6 @@ resource "aws_secretsmanager_secret_version" "app_secrets" {
     DB_PASSWORD    = var.db_password
     JWT_SECRET_KEY = var.jwt_secret_key
     APP_SECRET_KEY = var.app_secret_key
+    GROQ_API_KEY   = var.groq_api_key
   })
 }

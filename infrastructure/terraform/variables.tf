@@ -73,6 +73,13 @@ variable "app_secret_key" {
   sensitive   = true
 }
 
+variable "groq_api_key" {
+  description = "Groq API key for free LLM inference"
+  type        = string
+  sensitive   = true
+  default     = ""
+}
+
 # ── GitHub (CI/CD OIDC) ─────────────────────────────────────
 
 variable "github_org" {

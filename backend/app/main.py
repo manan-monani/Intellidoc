@@ -97,14 +97,13 @@ app.add_middleware(
 # ── Include Routers ──────────────────────────────────────────
 from app.api.documents import router as documents_router
 from app.api.auth import router as auth_router
-
-app.include_router(documents_router)
-app.include_router(auth_router)
-
 from app.api.ml import router as ml_router
 from app.api.rag import router as rag_router
-app.include_router(ml_router)
-app.include_router(rag_router)
+
+app.include_router(auth_router, prefix="/api")
+app.include_router(documents_router, prefix="/api")
+app.include_router(ml_router, prefix="/api")
+app.include_router(rag_router, prefix="/api")
 
 
 # ── Health Check ─────────────────────────────────────────────
@@ -116,11 +115,6 @@ async def root():
         "status": "running",
         "version": "1.0.0",
     }
-
-@app.get("/health", tags=["Health"])
-async def health():
-    """Health check endpoint for ALB and container health checks."""
-    return {"status": "healthy"}
 
 @app.get("/health", tags=["Health"])
 async def health_check():

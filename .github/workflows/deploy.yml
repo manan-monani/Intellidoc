@@ -133,9 +133,10 @@ jobs:
 
       - name: Build frontend
         working-directory: frontend
-        run: VITE_API_URL="" npm run build
+        run: npm run build
         env:
           CI: true
+          VITE_API_URL: ""
 
       - name: Deploy to S3
         run: |

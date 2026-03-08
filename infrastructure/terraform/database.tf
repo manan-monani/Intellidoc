@@ -24,14 +24,13 @@ resource "aws_db_instance" "postgres" {
   username = "intellidoc_user"
   password = var.db_password
 
-  skip_final_snapshot       = false
-  final_snapshot_identifier = "${var.project_name}-db-final-snapshot"
-  backup_retention_period   = 7
+  skip_final_snapshot       = true
+  backup_retention_period   = 1
   backup_window             = "03:00-04:00"
   maintenance_window        = "Mon:04:00-Mon:05:00"
 
   publicly_accessible    = false
-  multi_az               = var.environment == "prod" ? true : false
+  multi_az               = false
   vpc_security_group_ids = [aws_security_group.rds.id]
   db_subnet_group_name   = aws_db_subnet_group.main.name
 

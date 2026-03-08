@@ -19,6 +19,10 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.config import get_settings
 from app.database import init_db, close_db
+from app.api.auth import router as auth_router
+from app.api.documents import router as documents_router
+from app.api.ml import router as ml_router
+from app.api.rag import router as rag_router
 import logging
 
 # ── Logging Setup ────────────────────────────────────────────
@@ -95,11 +99,6 @@ app.add_middleware(
 
 
 # ── Include Routers ──────────────────────────────────────────
-from app.api.documents import router as documents_router
-from app.api.auth import router as auth_router
-from app.api.ml import router as ml_router
-from app.api.rag import router as rag_router
-
 app.include_router(auth_router, prefix="/api")
 app.include_router(documents_router, prefix="/api")
 app.include_router(ml_router, prefix="/api")

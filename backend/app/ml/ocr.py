@@ -66,11 +66,12 @@ class OCREngine:
         """
         Extract text from a PDF file.
 
+        First tries direct text extraction via PyMuPDF (fast, works for
+        text-based PDFs). Falls back to Tesseract OCR for scanned/image PDFs.
+
         Args:
             pdf_bytes: Raw PDF file content
-            dpi: Resolution for PDF-to-image conversion
-                 300 = good balance of quality and speed
-                 Higher = better quality but slower
+            dpi: Resolution for PDF-to-image conversion (Tesseract fallback)
 
         Returns:
             {
@@ -83,6 +84,50 @@ class OCREngine:
                 ]
             }
         """
+        # Try PyMuPDF first (fast, no external dependencies)
+        try:
+            result = self._extract_with_pymupdf(pdf_bytes)
+            if result and result["text"].strip():
+                logger.info("Text extracted via PyMuPDF (text-based PDF)")
+                return result
+        except Exception as e:
+            logger.warning(f"PyMuPDF extraction failed, falling back to OCR: {e}")
+
+        # Fallback: Tesseract OCR for scanned/image PDFs
+        return self._extract_with_tesseract(pdf_bytes, dpi)
+
+    def _extract_with_pymupdf(self, pdf_bytes: bytes) -> dict:
+        """Extract text from a text-based PDF using pypdf."""
+        from pypdf import PdfReader
+        import io
+
+        reader = PdfReader(io.BytesIO(pdf_bytes))
+        pages = []
+        all_text = []
+
+        for i, page in enumerate(reader.pages):
+            text = (page.extract_text() or "").strip()
+            pages.append({
+                "page": i + 1,
+                "text": text,
+                "confidence": 99.0 if text else 0.0,
+            })
+            all_text.append(text)
+
+        full_text = "\n\n".join(all_text)
+        avg_confidence = (
+            sum(p["confidence"] for p in pages) / len(pages) if pages else 0
+        )
+
+        return {
+            "text": full_text,
+            "confidence": round(avg_confidence, 2),
+            "page_count": len(pages),
+            "pages": pages,
+        }
+
+    def _extract_with_tesseract(self, pdf_bytes: bytes, dpi: int = 300) -> dict:
+        """Fallback: Extract text from a scanned PDF using Tesseract OCR."""
         # Convert PDF pages to images
         try:
             images = convert_from_bytes(pdf_bytes, dpi=dpi)

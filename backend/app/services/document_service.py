@@ -54,7 +54,7 @@ class DocumentService:
             user_id: Optional owning user
 
         Returns:
-            Created Document object
+            Created Document object with relationships loaded
         """
         doc = Document(
             filename=data.filename,
@@ -67,6 +67,9 @@ class DocumentService:
         self.db.add(doc)
         await self.db.flush()  # Get the ID without committing
         logger.info(f"Created document record: {doc.id} - {doc.filename}")
+
+        # Eagerly load relationships so Pydantic can serialize without lazy loading
+        await self.db.refresh(doc, attribute_names=["metadata_entries", "processing_jobs"])
         return doc
 
     # ── Read ─────────────────────────────────────────────────

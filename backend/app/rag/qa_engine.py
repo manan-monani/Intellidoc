@@ -337,10 +337,10 @@ Answer:"""
 
         except Exception as e:
             logger.error(f"LLM generation failed: {e}")
+            # Fallback: return relevant chunks as the answer
             return (
-                f"I found relevant information but couldn't generate a response. "
-                f"Error: {str(e)}. "
-                f"Make sure Ollama is running with the '{settings.ollama_model}' model."
+                f"**Note:** LLM is not available ({settings.llm_provider}). "
+                f"Showing relevant document excerpts instead:\n\n{context}"
             )
 
     # ── Stats ────────────────────────────────────────────────

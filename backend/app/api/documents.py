@@ -86,14 +86,18 @@ async def upload_document(
 
     # Create database record
     service = DocumentService(db)
-    doc = await service.create_document(
-        DocumentCreate(
-            filename=file.filename,
-            s3_key=s3_key,
-            file_type=ext,
-            file_size=len(content),
+    try:
+        doc = await service.create_document(
+            DocumentCreate(
+                filename=file.filename,
+                s3_key=s3_key,
+                file_type=ext,
+                file_size=len(content),
+            )
         )
-    )
+    except Exception as e:
+        logger.error(f"Database record creation failed: {e}", exc_info=True)
+        raise HTTPException(status_code=500, detail="Failed to save document record")
 
     return doc
 

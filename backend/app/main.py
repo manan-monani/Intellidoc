@@ -19,6 +19,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.config import get_settings
 from app.database import init_db, close_db
+from app.services.s3_service import get_s3_service
 from app.api.auth import router as auth_router
 from app.api.documents import router as documents_router
 from app.api.ml import router as ml_router
@@ -56,6 +57,14 @@ async def lifespan(app: FastAPI):
 
     await init_db()
     logger.info("✅ Database initialized")
+
+    # Ensure S3 bucket exists (creates it in LocalStack for local dev)
+    try:
+        s3 = get_s3_service()
+        s3.ensure_bucket_exists()
+        logger.info("✅ S3 bucket ready")
+    except Exception as e:
+        logger.warning(f"⚠️ S3 bucket check failed: {e}")
 
     yield  # App is running
 

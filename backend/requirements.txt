@@ -22,32 +22,33 @@ passlib[bcrypt]==1.7.4
 bcrypt==4.2.1
 
 # ---- Data Processing ----
-pandas==2.2.3
-numpy==1.26.4
+pandas>=2.2.3
+numpy>=2.1.0
 
 # ---- ML / Deep Learning ----
 # torch and torchvision installed separately in Dockerfile (CPU-only)
-transformers==4.47.1
-scikit-learn==1.6.1
+transformers>=4.47.1
+scikit-learn>=1.6.1
 
 # ---- NLP ----
 nltk==3.9.1
-spacy==3.8.4
+spacy>=3.8.7
 
 # ---- OCR ----
 pytesseract==0.3.13
-Pillow==11.1.0
+Pillow>=11.1.0
 pdf2image==1.17.0
+pypdf>=4.0.0
 
 # ---- Computer Vision ----
-opencv-python-headless==4.10.0.84
+opencv-python-headless>=4.10.0.84
 
 # ---- RAG Pipeline ----
-langchain==0.3.16
-langchain-community==0.3.16
-langchain-huggingface==0.1.2
-sentence-transformers==3.3.1
-faiss-cpu==1.9.0.post1
+langchain>=0.3.16
+langchain-community>=0.3.16
+langchain-huggingface>=0.1.2
+sentence-transformers>=3.3.1
+faiss-cpu>=1.9.0.post1
 
 # ---- LLM ----
 ollama>=0.4.0

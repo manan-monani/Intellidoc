@@ -25,7 +25,7 @@ Industry context:
     - Larger chunks = more context per result
 """
 
-from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain_text_splitters import RecursiveCharacterTextSplitter
 import logging
 from typing import List, Optional
 from uuid import UUID

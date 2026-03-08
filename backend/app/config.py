@@ -56,6 +56,8 @@ class Settings(BaseSettings):
     aws_secret_access_key: str = ""
     aws_region: str = "ap-south-1"
     s3_bucket_name: str = "intellidoc-documents"
+    # Leave empty for real AWS; set to http://localhost:4566 for LocalStack (local dev)
+    aws_endpoint_url: str = ""
 
     # ── ML Models ────────────────────────────────────────────
     ml_inference_mode: str = "local"  # "local" or "bedrock"

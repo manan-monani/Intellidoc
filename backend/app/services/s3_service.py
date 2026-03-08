@@ -45,6 +45,9 @@ class S3Service:
         if settings.aws_access_key_id and settings.aws_secret_access_key:
             client_kwargs["aws_access_key_id"] = settings.aws_access_key_id
             client_kwargs["aws_secret_access_key"] = settings.aws_secret_access_key
+        # Use LocalStack endpoint for local development
+        if settings.aws_endpoint_url:
+            client_kwargs["endpoint_url"] = settings.aws_endpoint_url
         self.client = boto3.client("s3", **client_kwargs)
         self.bucket = settings.s3_bucket_name
 
